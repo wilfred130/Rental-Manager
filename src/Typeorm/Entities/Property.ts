@@ -4,6 +4,7 @@ import { User } from './User';
 import { Address } from './Address';
 import { Period } from './Period';
 import { Location } from './Location';
+import { Amenities } from './Amenities';
 
 
 @Entity()
@@ -35,4 +36,7 @@ export class Property {
   @ManyToOne(() => User, user => user.properties)
   @JoinColumn({ name: 'landlordId' })
   landlord: User;
+
+  @OneToMany(() => Amenities, amenities => amenities.property)
+  amenities: Amenities[];
 }

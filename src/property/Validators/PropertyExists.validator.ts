@@ -3,7 +3,7 @@ import { PipeTransform, Injectable, NotFoundException, BadRequestException } fro
 import { PropertyService } from '../services/property/property.service';
 
 @Injectable()
-export class PropertyeExistsPipe implements PipeTransform {
+export class PropertyExistsPipe implements PipeTransform {
   constructor(private readonly propertyService: PropertyService) {}
 
   async transform(value: any) {

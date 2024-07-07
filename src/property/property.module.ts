@@ -8,10 +8,11 @@ import { UsersModule } from 'src/users/users.module';
 import { IdExistsPipe } from 'src/users/Validators/UserValidatorById';
 import { UsersService } from 'src/users/services/users/users.service';
 import { PasswordService } from 'src/users/utils/bcrypt';
-import { PropertyeExistsPipe } from './Validators/PropertyExists.validator';
+import { PropertyExistsPipe } from './Validators/PropertyExists.validator';
 import { LandordExistsPipe } from './Validators/LandLordExist.validator';
 import { CreatePropertyValidator } from './Validators/CreateProperty.dto.validator';
 import { PropertyExistsMiddleware } from './Middleware/ImageUpload.middleware';
+import { UpdatePropertyValidator } from './Validators/UpdateProperty.validator';
 
 
 @Module({
@@ -21,8 +22,8 @@ import { PropertyExistsMiddleware } from './Middleware/ImageUpload.middleware';
   ],
   controllers: [PropertyController,],
   providers: [PropertyService,IdExistsPipe, UsersService, 
-    PasswordService, PropertyeExistsPipe, LandordExistsPipe,
-    CreatePropertyValidator, 
+    PasswordService, PropertyExistsPipe, LandordExistsPipe,
+    CreatePropertyValidator, UpdatePropertyValidator,
   ]
 })
 export class PropertyModule {

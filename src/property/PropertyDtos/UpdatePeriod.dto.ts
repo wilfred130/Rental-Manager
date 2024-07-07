@@ -9,5 +9,5 @@ export class UpdatePeriodDto {
     @IsString()
     @IsNotEmpty()
     @IsOptional()
-    typeOfPeriod: string;
+    Duration: string;
 }

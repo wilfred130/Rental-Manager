@@ -5,7 +5,7 @@ export type CreateProfileParams = {
     lastName: string;
     profileImage?: string;
     physicalAddress: string;
-    dob: Date;
+    dob: string;
     socialMediaHandles?: string[];
     role: Role;
   };
@@ -16,7 +16,7 @@ export type UpdateProfileParams = {
     lastName: string;
     profileImage?: string;
     physicalAddress: string;
-    dob: Date;
+    dob: string;
     socialMediaHandles?: string[];
     role: Role;
   };

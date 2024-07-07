@@ -7,5 +7,5 @@ export class CreatePeriodDto {
 
     @IsString()
     @IsNotEmpty()
-    typeOfPeriod: string;
+    Duration: string;
 }

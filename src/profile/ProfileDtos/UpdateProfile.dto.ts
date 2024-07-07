@@ -1,4 +1,4 @@
-import { IsDate, IsEnum, IsJSON, IsNotEmpty, IsOptional, IsString } from "class-validator";
+import { IsDate, IsDateString, IsEnum, IsJSON, IsNotEmpty, IsOptional, IsString } from "class-validator";
 import { Role } from "src/Typeorm/Entities/Roles.enum";
 
 export class UpdateProfileDto {
@@ -23,10 +23,10 @@ export class UpdateProfileDto {
     @IsOptional()
     physicalAddress: string;
 
-    @IsDate()
+    @IsDateString()
     @IsNotEmpty()
     @IsOptional()
-    dob: Date;
+    dob: string;
 
     @IsJSON()
     @IsNotEmpty()

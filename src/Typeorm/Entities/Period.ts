@@ -5,5 +5,5 @@ export class Period {
   length: number;
 
   @Column()
-  typeOfPeriod: string;
+  Duration: string;
 }

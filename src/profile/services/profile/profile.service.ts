@@ -63,10 +63,8 @@ export class ProfileService {
     // geting profile image
     async loadProfileImage(id: number) {
         const profile = await this.findOne(id);
-        let profileImagePath = profile.profileImage;
-        profileImagePath = join(process.cwd(), 'uploads', 'profileImages', profileImagePath);
-        return profileImagePath;
+        const profileImagePath = profile.profileImage;
+        return `/profileImages/${profileImagePath}`;
     }
-
     // deleting profile image
 }

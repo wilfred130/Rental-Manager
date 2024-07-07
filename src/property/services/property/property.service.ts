@@ -17,7 +17,7 @@ export class PropertyService {
 
     // find All
     getAll() {
-        return this.propertyRepository.find({relations: ['landlord']});
+        return this.propertyRepository.find({relations: ['landlord', 'amenities']});
     }
 
     // find one
@@ -79,6 +79,7 @@ export class PropertyService {
     // get images
     async getImages(id: number) {
         const propety = await this.propertyRepository.findOneBy({ id });
-        return propety.images;
+        const filenames = propety.images.map(imagePath => `/propertyImages/${imagePath}`);
+        return filenames;
     }
 }

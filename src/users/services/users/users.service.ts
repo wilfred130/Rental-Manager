@@ -15,7 +15,7 @@ export class UsersService {
     
     // get all
     findAll() {
-        return this.userRepository.find({relations: ['profile', 'properties']});
+        return this.userRepository.find({relations: ['profile', 'properties', 'properties.amenities']});
     }
 
     // create user with hashed password
@@ -35,7 +35,7 @@ export class UsersService {
 
     // find one
     findOne(id: number) {
-        return this.userRepository.findOneBy({ id });
+        return this.userRepository.findOne({where: {id: id}, relations: ['profile', 'properties', 'properties.amenities']});
     }
 
     // delete one

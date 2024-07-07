@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Inject, Param, ParseIntPipe, Post, Put,  Res,  UploadedFile, UseGuards, UseInterceptors,  UsePipes,  ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, Inject, Param, ParseIntPipe, Post, Put,    UploadedFile, UseGuards, UseInterceptors,  UsePipes,  ValidationPipe } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { JwtAuthGuard } from 'src/auth/Guards/JwtAuthGuard';
 import { CreateProfileDto } from 'src/profile/ProfileDtos/CreateProfile.dto';
@@ -8,9 +8,10 @@ import { ValidateCreateProfilePipe } from 'src/profile/Validators/CreateUserProf
 import { ValidateUpdateProfilePipe } from 'src/profile/Validators/UpdateProfileDto.validator';
 import { ProfileService } from 'src/profile/services/profile/profile.service';
 import { IdExistsPipe } from 'src/users/Validators/UserValidatorById';
-import { Response } from 'express';
-import { storage } from 'src/profile/Configs/Storage';
-
+import { diskStorage } from 'multer';
+import { extname } from 'path';
+import { v4 as uuidv4 } from 'uuid';
+import { FileExistsInterceptor } from 'src/profile/Interceptors/FileExists.interceptor';
 
 @Controller('profile')
 export class ProfileController {
@@ -55,17 +56,25 @@ export class ProfileController {
     @UseGuards(JwtAuthGuard)
     @Post(':id/upload')
     @UseInterceptors(
-        FileInterceptor('file', storage)
+        FileInterceptor('file', {
+            storage: diskStorage({
+                destination: './uploads/profileImages',
+                filename: (req, file, cb) => {
+                    const uniqueName = uuidv4() + extname(file.originalname);
+                    cb(null, uniqueName);
+                }
+            })
+        }),
+        FileExistsInterceptor
     )
     uploadProfileImage(@Param('id') id: number, 
-    @UploadedFile() file: Express.Multer.File) {
+    @UploadedFile() file: Express.Multer.File) { 
         return this.profileService.uploadProfileImage(id, file.filename);
     }
 
     @UseGuards(JwtAuthGuard)
-    @Get(':id/profile-image')
-    async getProfileImage(@Param('id', ParseIntPipe, ProfileExistsPipe) id: number, @Res() res: Response) {
-        const imagePath = await this.profileService.loadProfileImage(id);
-        return res.sendFile(imagePath);
+    @Get(':id/profileImage')
+    getProfileImage(@Param('id', ParseIntPipe, ProfileExistsPipe) id: number) {
+        return this.profileService.loadProfileImage(id);
     }
 }

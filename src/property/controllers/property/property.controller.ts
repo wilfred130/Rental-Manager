@@ -3,11 +3,13 @@ import { FilesInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
 import { JwtAuthGuard } from 'src/auth/Guards/JwtAuthGuard';
+import { FilesExistInterceptor } from 'src/property/Interceptors/FilesExist.interceptor';
 import { CreatePropertyDto } from 'src/property/PropertyDtos/CreateProperty.dto';
 import { UpdatePropertyDto } from 'src/property/PropertyDtos/UpdatePropety.dto';
 import { CreatePropertyValidator } from 'src/property/Validators/CreateProperty.dto.validator';
 import { LandordExistsPipe } from 'src/property/Validators/LandLordExist.validator';
-import { PropertyeExistsPipe } from 'src/property/Validators/PropertyExists.validator';
+import { PropertyExistsPipe } from 'src/property/Validators/PropertyExists.validator';
+import { UpdatePropertyValidator } from 'src/property/Validators/UpdateProperty.validator';
 import { PropertyService } from 'src/property/services/property/property.service';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -27,7 +29,7 @@ export class PropertyController {
 
     @UseGuards(JwtAuthGuard)
     @Get(':id/one')
-    getOne(@Param('id', ParseIntPipe, PropertyeExistsPipe) id: number) {
+    getOne(@Param('id', ParseIntPipe, PropertyExistsPipe) id: number) {
         return this.propertyService.findOne(id);
     }
 
@@ -46,13 +48,14 @@ export class PropertyController {
 
     @UseGuards(JwtAuthGuard)
     @Delete(':id')
-    deleteProperty(@Param('id', ParseIntPipe, PropertyeExistsPipe) id: number) {
+    deleteProperty(@Param('id', ParseIntPipe, PropertyExistsPipe) id: number) {
         return this.propertyService.remove(id);
     }
 
+    @UseGuards(JwtAuthGuard)
     @Put(':id')
-    updateProperty(@Param('id', ParseIntPipe, PropertyeExistsPipe) id: number, 
-    @Body(new ValidationPipe(), CreatePropertyValidator) updatePropertyDto: UpdatePropertyDto) {
+    updateProperty(@Param('id', ParseIntPipe, PropertyExistsPipe) id: number, 
+    @Body(new ValidationPipe(), UpdatePropertyValidator) updatePropertyDto: UpdatePropertyDto) {
         return this.propertyService.updateOne(id, updatePropertyDto);
     }
 
@@ -69,18 +72,20 @@ export class PropertyController {
                     callback(null, filename);
                 }
             })
-        })
+        }),
+        FilesExistInterceptor
     )
-    async uploadImages(@Param('id', ParseIntPipe, PropertyeExistsPipe) id: number, 
+    async uploadImages(@Param('id', ParseIntPipe, PropertyExistsPipe) id: number, 
     @UploadedFiles() files: Express.Multer.File[]) {
-        const filenames = files.map(file => `./uploads/propertyImages/${file.filename}`);
+        const filenames = files.map(file => `${file.filename}`);
         return this.propertyService.addImages(id, filenames);
     }
 
+    @UseGuards(JwtAuthGuard)
     @Get(':id/imageLinks')
-    getImages(@Param('id', ParseIntPipe, PropertyeExistsPipe) id: number) {
+    getImages(@Param('id', ParseIntPipe, PropertyExistsPipe) id: number) {
         return this.propertyService.getImages(id);
-    }
+    }   
 }
 
 
