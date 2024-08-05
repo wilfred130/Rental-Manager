@@ -1,5 +1,4 @@
 export enum Role {
-    Tenant = 'tenant',
-    PropertyOwner = 'propertyOwner',
+  Tenant = 'tenant',
+  PropertyOwner = 'propertyOwner',
 }
-  

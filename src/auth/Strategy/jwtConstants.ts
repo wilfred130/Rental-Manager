@@ -1,3 +1,3 @@
 export const jwtConstants = {
-    secret: 'SNDJJSKRKJKAKJENDJHSJKDJ', // replcae with new secret
-  };
+  secret: 'SNDJJSKRKJKAKJENDJHSJKDJ', // replcae with new secret
+};

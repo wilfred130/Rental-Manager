@@ -1,11 +1,10 @@
 // src/common/pipes/validate-update-user.pipe.ts
 import { PipeTransform, Injectable, BadRequestException } from '@nestjs/common';
 
-
 @Injectable()
 export class ValidateUpdateUserPipe implements PipeTransform {
   transform(value: any) {
-    const allowedKeys = ['email', 'username'];
+    const allowedKeys = ['email', 'firstName', 'lastName'];
     const filteredValue = {};
 
     // Remove any extra fields
@@ -17,7 +16,7 @@ export class ValidateUpdateUserPipe implements PipeTransform {
 
     // Check if the DTO is not empty
     if (Object.keys(filteredValue).length === 0) {
-      throw new BadRequestException('At least one property must be provided');
+      throw new BadRequestException('All properties must be as required.');
     }
 
     return filteredValue;

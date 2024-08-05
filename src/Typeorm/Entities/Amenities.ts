@@ -1,7 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 import { Property } from './Property';
 
-
 @Entity()
 export class Amenities {
   @PrimaryGeneratedColumn()
@@ -13,9 +12,9 @@ export class Amenities {
   @Column('text')
   description: string;
 
-  @Column('simple-array', {nullable: true})
+  @Column('simple-array', { nullable: true })
   images: string[];
 
-  @ManyToOne(() => Property, property => property.amenities)
+  @ManyToOne(() => Property, (property) => property.amenities)
   property: Property;
 }

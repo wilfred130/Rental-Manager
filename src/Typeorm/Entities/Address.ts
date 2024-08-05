@@ -11,7 +11,7 @@ export class Address {
   @Column()
   state: string;
 
-  @Column({ nullable: true})
+  @Column({ nullable: true })
   postal: string;
 
   @Column()
@@ -20,9 +20,9 @@ export class Address {
   @Column()
   country: string;
 
-  @Column({nullable: true})
+  @Column({ nullable: true })
   addressLine: string;
 
-  @Column({nullable: true})
+  @Column({ nullable: true })
   neighborhood: string;
 }

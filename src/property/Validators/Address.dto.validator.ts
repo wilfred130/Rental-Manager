@@ -4,11 +4,12 @@ import { plainToClass } from 'class-transformer';
 import { validate } from 'class-validator';
 import { CreateAddressDto } from '../PropertyDtos/CreateAddress.dto';
 
-
 @Injectable()
 export class CreateAddressValidator implements PipeTransform {
   async transform(value: any): Promise<CreateAddressDto> {
-    const object = plainToClass(CreateAddressDto, value, { excludeExtraneousValues: true });
+    const object = plainToClass(CreateAddressDto, value, {
+      excludeExtraneousValues: true,
+    });
 
     // Validate the transformed object using class-validator
     const errors = await validate(object);

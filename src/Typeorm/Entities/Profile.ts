@@ -1,10 +1,15 @@
 // src/profile/profile.entity.ts
-import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToOne,
+  JoinColumn,
+} from 'typeorm';
 import { User } from './User';
 import { Role } from './Roles.enum';
 
-
-@Entity({name: 'user_profiles'})
+@Entity({ name: 'user_profiles' })
 export class Profile {
   @PrimaryGeneratedColumn()
   id: number;
@@ -15,16 +20,16 @@ export class Profile {
   @Column()
   lastName: string;
 
-  @Column({ nullable: true, default: null})
+  @Column({ nullable: true, default: null })
   profileImage: string;
 
-  @Column({default: null, nullable: true})
+  @Column({ default: null, nullable: true })
   physicalAddress: string;
 
-  @Column({default: null, nullable: true})
+  @Column({ default: null, nullable: true })
   dob: Date;
 
-  @Column('json', { nullable: true , default: null})
+  @Column('json', { nullable: true, default: null })
   socialMediaHandles: string[];
 
   @Column({
@@ -33,7 +38,7 @@ export class Profile {
   })
   role: Role;
 
-  @OneToOne(() => User, user => user.profile)
+  @OneToOne(() => User, (user) => user.profile)
   @JoinColumn()
   user: User;
 }

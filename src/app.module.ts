@@ -18,37 +18,41 @@ import { CacheModule } from '@nestjs/cache-manager';
   imports: [
     CacheModule.register({
       ttl: 120,
-      max: 100
+      max: 100,
     }),
     ServeStaticModule.forRoot(
       {
-        rootPath: join(__dirname,'..', 'uploads/profileImages'),
+        rootPath: join(__dirname, '..', 'uploads/profileImages'),
         serveRoot: '/profileImages',
       },
       {
-        rootPath: join(__dirname,'..', 'uploads/propertyImages'),
+        rootPath: join(__dirname, '..', 'uploads/propertyImages'),
         serveRoot: '/propertyImages',
       },
       {
-        rootPath: join(__dirname,'..', 'uploads/amenitiesImages'),
+        rootPath: join(__dirname, '..', 'uploads/amenitiesImages'),
         serveRoot: '/amenitiesImages',
-      }
+      },
     ),
     ConfigModule.forRoot({
-    envFilePath: '.env.development',
-  }),
-  UsersModule, 
-  AuthModule, 
-  TypeOrmModule.forRoot({
-    type: 'mysql',
-    host: process.env.MySQL_DB_HOST,
-    port: Number.parseInt(process.env.MYSQL_DB_PORT),
-    username: process.env.MYSQL_DB_USER,
-    password: process.env.MYSQL_DB_PASSWORD,
-    database: process.env.MYSQL_DB_NAME,
-    entities: [User, Profile, Property, Amenities],
-    synchronize: true,
-}), ProfileModule, PropertyModule, AmenitiesModule],
+      envFilePath: '.env.development',
+    }),
+    UsersModule,
+    AuthModule,
+    TypeOrmModule.forRoot({
+      type: 'mysql',
+      host: process.env.MySQL_DB_HOST,
+      port: Number.parseInt(process.env.MYSQL_DB_PORT),
+      username: process.env.MYSQL_DB_USER,
+      password: process.env.MYSQL_DB_PASSWORD,
+      database: process.env.MYSQL_DB_NAME,
+      entities: [User, Profile, Property, Amenities],
+      synchronize: true,
+    }),
+    ProfileModule,
+    PropertyModule,
+    AmenitiesModule,
+  ],
   controllers: [],
   providers: [],
 })

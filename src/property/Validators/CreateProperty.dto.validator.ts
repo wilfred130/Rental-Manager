@@ -4,7 +4,6 @@ import { plainToClass } from 'class-transformer';
 import { validate } from 'class-validator';
 import { CreatePropertyDto } from '../PropertyDtos/CreateProperty.dto';
 
-
 @Injectable()
 export class CreatePropertyValidator implements PipeTransform {
   async transform(value: any): Promise<CreatePropertyDto> {

@@ -14,22 +14,24 @@ import { CreatePropertyValidator } from './Validators/CreateProperty.dto.validat
 import { PropertyExistsMiddleware } from './Middleware/ImageUpload.middleware';
 import { UpdatePropertyValidator } from './Validators/UpdateProperty.validator';
 
-
 @Module({
-  imports: [
-    UsersModule,
-    TypeOrmModule.forFeature([Property, User])
+  imports: [UsersModule, TypeOrmModule.forFeature([Property, User])],
+  controllers: [PropertyController],
+  providers: [
+    PropertyService,
+    IdExistsPipe,
+    UsersService,
+    PasswordService,
+    PropertyExistsPipe,
+    LandordExistsPipe,
+    CreatePropertyValidator,
+    UpdatePropertyValidator,
   ],
-  controllers: [PropertyController,],
-  providers: [PropertyService,IdExistsPipe, UsersService, 
-    PasswordService, PropertyExistsPipe, LandordExistsPipe,
-    CreatePropertyValidator, UpdatePropertyValidator,
-  ]
 })
 export class PropertyModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(PropertyExistsMiddleware)
-      .forRoutes({path: 'property/:id/images', method: RequestMethod.POST})
+      .forRoutes({ path: 'property/:id/images', method: RequestMethod.POST });
   }
 }

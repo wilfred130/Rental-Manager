@@ -1,24 +1,36 @@
-import { Column, Entity, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
-import { Profile } from "./Profile";
-import { Property } from "./Property";
+import {
+  Column,
+  Entity,
+  OneToMany,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { Profile } from './Profile';
+import { Property } from './Property';
 
-@Entity({name: 'users'})
-export class User{
-    @PrimaryGeneratedColumn()
-    id: number;
+@Entity({ name: 'users' })
+export class User {
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column({unique: true})
-    username: string;
+  @Column({ unique: true })
+  username: string;
 
-    @Column({unique: true})
-    email: string;
+  @Column()
+  firstname: string;
 
-    @Column()
-    password: string;
+  @Column()
+  lastname: string;
 
-    @OneToOne(() => Profile, profile => profile.user)
-    profile: Profile;
+  @Column({ unique: true })
+  email: string;
 
-    @OneToMany(() => Property, property => property.landlord)
-    properties: Property[];
+  @Column()
+  password: string;
+
+  @OneToOne(() => Profile, (profile) => profile.user)
+  profile: Profile;
+
+  @OneToMany(() => Property, (property) => property.landlord)
+  properties: Property[];
 }

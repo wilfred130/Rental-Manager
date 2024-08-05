@@ -1,11 +1,10 @@
-
 import { Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcryptjs';
 
 @Injectable()
 export class PasswordService {
   hash(password: string): string {
-    const salt = bcrypt.genSaltSync(10); 
+    const salt = bcrypt.genSaltSync(10);
     return bcrypt.hashSync(password, salt);
   }
 
